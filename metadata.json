@@ -4,15 +4,25 @@
   "author": "benformosa",
   "summary": "Disables or enables IPv6 on Linux platforms",
   "license": "Apache-2.0",
-  "source": "",
-  "project_page": null,
-  "issues_url": null,
+  "source": "https://github.com/benformosa/puppet-linux_disable_ipv6",
+  "project_page": "https://github.com/benformosa/puppet-linux_disable_ipv6",
+  "issues_url": "https://github.com/benformosa/puppet-linux_disable_ipv6/issues",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
       "version_requirement": ">= 1.0.0"
     }
   ],
-  "data_provider": null
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    }
+  ],
+  "data_provider": null,
+  "description": "This module disables IPv6 for Linux systems"
 }
 

@@ -1,0 +1,11 @@
+# This file is being maintained by Puppet.
+# DO NOT EDIT
+#
+# Disable IPv6
+<% if @interfaces.include? 'all' -%>
+net.ipv6.conf.all.disable_ipv6 = 1
+<% else -%>
+<% @interfaces.each do |interface| -%>
+net.ipv6.conf.<%= interface %>.disable_ipv6 = 1
+<% end -%>
+<% end -%>

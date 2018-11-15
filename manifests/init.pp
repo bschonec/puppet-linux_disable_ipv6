@@ -49,38 +49,38 @@ class linux_disable_ipv6 (
             command     =>  'cat /etc/sysctl.d/*.conf | sysctl -p -',
             path        =>  '/sbin:/bin:/usr/sbin:/usr/bin',
             refreshonly =>  true,
-            # notify => Exec['dracut -f'],
+            notify => Exec['dracut -f'],
           }
 
-            #          # Only runs after notify
-            #          exec { 'dracut -f':
-            #            command =>  "dracut -f",
-            #            path =>  '/sbin:/bin:/usr/sbin:/usr/bin',
-            #            refreshonly =>  true,
-            #          }
+          # Only runs after notify
+          exec { 'dracut -f':
+            command =>  "dracut -f",
+            path =>  '/sbin:/bin:/usr/sbin:/usr/bin',
+            refreshonly =>  true,
+          }
 
-            # Create sysctl configuration file and notify Exec['sysctl -p']
-            file { 'ipv6.conf':
-              ensure  => $ensure,
-              content => template('linux_disable_ipv6/sysctl.d_ipv6.conf.erb'),
-              group   => 'root',
-              mode    => '0644',
-              owner   => 'root',
-              path    => '/etc/sysctl.d/ipv6.conf',
-              notify  => Exec['sysctl -p'],
-            }
+          # Create sysctl configuration file and notify Exec['sysctl -p']
+          file { 'ipv6.conf':
+            ensure  => $ensure,
+            content => template('linux_disable_ipv6/sysctl.d_ipv6.conf.erb'),
+            group   => 'root',
+            mode    => '0644',
+            owner   => 'root',
+            path    => '/etc/sysctl.d/ipv6.conf',
+            notify  => Exec['sysctl -p'],
+          }
 
-            # Update /etc/netconfig to prevent rpc* messages: https://access.redhat.com/solutions/2963091
-            file_line { 'netconfig-udp6':
-              line  => "udp6       tpi_clts      ${netconfig}     inet6    udp     -       -",
-              match => '^udp6',
-              path  => '/etc/netconfig',
-            }
-            file_line { 'netconfig-tcp6':
-              line  => "tcp6       tpi_cots_ord  ${netconfig}     inet6    tcp     -       -",
-              match => '^tcp6',
-              path  => '/etc/netconfig',
-            }
+          # Update /etc/netconfig to prevent rpc* messages: https://access.redhat.com/solutions/2963091
+          file_line { 'netconfig-udp6':
+            line  => "udp6       tpi_clts      ${netconfig}     inet6    udp     -       -",
+            match => '^udp6',
+            path  => '/etc/netconfig',
+          }
+          file_line { 'netconfig-tcp6':
+            line  => "tcp6       tpi_cots_ord  ${netconfig}     inet6    tcp     -       -",
+            match => '^tcp6',
+            path  => '/etc/netconfig',
+          }
 
         }
         default: {

@@ -1,7 +1,18 @@
-# Class: linux_disable_ipv6
-
-# Methods to disable IPv6 on Red Hat from https://access.redhat.com/solutions/8709
-
+# @summary
+#   The linux_disable_ipv6 module disables IPv6 for Linux systems, following operating system vendor recommendations.
+#
+# @example Basic usage
+#   include linux_disable_ipv6
+#
+# @param disable_ipv6
+#   Disables IPv6 or reverts the effects of the module.
+#
+# @param interfaces
+#   Specifies interfaces for which to disable IPv6, where supported.
+#
+# @see https://access.redhat.com/solutions/8709
+#   Red Hat Solution - How do I disable or enable the IPv6 protocol in Red Hat Enterprise Linux?
+#
 class linux_disable_ipv6 (
   Boolean $disable_ipv6 = true,
   Array[String] $interfaces = ['all']

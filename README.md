@@ -52,8 +52,8 @@ class { 'linux_disable_ipv6':
 
 ### linux_disable_ipv6 class parameters
 
-| Parameter    | Type    | Default | Description |
-| :------------| :------ |:--------| :---------- |
+| Parameter   | Type  | Default | Description |
+|-------------|-------|---------|-------------|
 | disable_ipv6 | Boolean | true    | Set this to either disable IPv6, or revert the effect of this module |
 | interfaces   | Array[String] | ['all'] | Disable IPv6 for these interfaces. If not supported, this parameter is ignored. If it contains the value 'all', other interface names will be ignored. |
 

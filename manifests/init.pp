@@ -5,7 +5,7 @@
 #   include linux_disable_ipv6
 #
 # @param disable_ipv6
-#   Disables IPv6 or reverts the effects of the module.
+#   Disables or enables IPv6.
 #
 # @param interfaces
 #   Specifies interfaces for which to disable IPv6, where supported.
@@ -15,21 +15,12 @@
 #
 class linux_disable_ipv6 (
   Boolean $disable_ipv6 = true,
-  Array[String] $interfaces = ['all']
+  Array[String] $interfaces = ['all'],
 ) {
-  if $disable_ipv6 {
-    $ensure = 'file'
-    $netconfig = '-'
-  } else {
-    $ensure = 'absent'
-    $netconfig = 'v'
-  }
-
   case $facts['os']['family'] {
     'RedHat': {
       case $facts['os']['release']['major'] {
         '7': {
-
           # Following the second method, using sysctl
 
           # Validation
@@ -46,22 +37,23 @@ class linux_disable_ipv6 (
 
           # Only runs after notify
           exec { 'sysctl -p':
-            command     =>  'cat /etc/sysctl.d/*.conf | sysctl -p -',
-            path        =>  '/sbin:/bin:/usr/sbin:/usr/bin',
-            refreshonly =>  true,
-            notify => Exec['dracut -f'],
+            command     => 'cat /etc/sysctl.d/*.conf | sysctl -p -',
+            path        => '/sbin:/bin:/usr/sbin:/usr/bin',
+            refreshonly => true,
+            notify      => Exec['dracut -f'],
           }
 
           # Only runs after notify
           exec { 'dracut -f':
-            command =>  "dracut -f",
-            path =>  '/sbin:/bin:/usr/sbin:/usr/bin',
+            command     =>  'dracut -f',
+            path        =>  '/sbin:/bin:/usr/sbin:/usr/bin',
             refreshonly =>  true,
           }
 
           # Create sysctl configuration file and notify Exec['sysctl -p']
+          $disable_ipv6_num = Integer($disable_ipv6)
           file { 'ipv6.conf':
-            ensure  => $ensure,
+            ensure  => file,
             content => template('linux_disable_ipv6/sysctl.d_ipv6.conf.erb'),
             group   => 'root',
             mode    => '0644',
@@ -71,6 +63,11 @@ class linux_disable_ipv6 (
           }
 
           # Update /etc/netconfig to prevent rpc* messages: https://access.redhat.com/solutions/2963091
+          if $disable_ipv6 {
+            $netconfig = '-'
+          } else {
+            $netconfig = 'v'
+          }
           file_line { 'netconfig-udp6':
             line  => "udp6       tpi_clts      ${netconfig}     inet6    udp     -       -",
             match => '^udp6',
@@ -80,6 +77,29 @@ class linux_disable_ipv6 (
             line  => "tcp6       tpi_cots_ord  ${netconfig}     inet6    tcp     -       -",
             match => '^tcp6',
             path  => '/etc/netconfig',
+          }
+
+          # Update /etc/sysconfig/network
+          file_line { 'sysconfig':
+            line  => "NETWORKING_IPV6=${bool2str($disable_ipv6, 'no', 'yes')}",
+            match => '^NETWORKING_IPV6=',
+            path  => '/etc/sysconfig/network',
+          }
+
+          # Update hosts file with localhost entry
+          if $disable_ipv6 {
+            $hosts_ensure = 'absent'
+            $hosts_match_for_absence = true
+          } else {
+            $hosts_ensure = 'present'
+            $hosts_match_for_absence = false
+          }
+          file_line { 'hosts':
+            ensure            => $hosts_ensure,
+            path              => '/etc/hosts',
+            match             => '^::1',
+            line              => '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6',
+            match_for_absence => $hosts_match_for_absence,
           }
 
         }

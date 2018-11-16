@@ -22,6 +22,12 @@
       ]
     }
   ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 5.0.0"
+    }
+  ],
   "data_provider": null,
   "description": "This module disables IPv6 for Linux systems"
 }

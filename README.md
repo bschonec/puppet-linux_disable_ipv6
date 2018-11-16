@@ -20,7 +20,16 @@ The linux_disable_ipv6 module disables IPv6 for Linux systems, following operati
 
 Depending on the operating system and version, the module may affect networking, kernel configuration and bootloader configuration.
 
-Using this module may cause issues with software which requires IPv6.
+Using this module may cause issues with software which requires IPv6, such as SSH Xforwarding.
+
+#### RedHat 7
+
+* Creates kernel parameter configuration file `/etc/sysctl.d/ipv6.conf`
+* Load kernel parameters from file with `sysctl -p`
+* Updates initramfs with `dracut -f`
+* Updates flags for IPv6 transports in `/etc/netconfig`
+* Updates `NETWORKING_IPV6` option in `/etc/sysconfig/network`
+* Removes IPv6 loopback address from `/etc/hosts`
 
 ### Beginning with linux_disable_ipv6
 
@@ -40,7 +49,7 @@ class { 'linux_disable_ipv6':
 }
 ```
 
-It's also possible to reverse the effects of this module, by setting the `disable_ipv6` to `false`:
+It's also possible to enable IPv6, by setting the `disable_ipv6` to `false`:
 
 ```puppet
 class { 'linux_disable_ipv6':
@@ -54,7 +63,7 @@ class { 'linux_disable_ipv6':
 
 | Parameter   | Type  | Default | Description |
 |-------------|-------|---------|-------------|
-| disable_ipv6 | Boolean | true    | Set this to either disable IPv6, or revert the effect of this module |
+| disable_ipv6 | Boolean | true    | Set this to either disable or enable IPv6 |
 | interfaces   | Array[String] | ['all'] | Disable IPv6 for these interfaces. If not supported, this parameter is ignored. If it contains the value 'all', other interface names will be ignored. |
 
 ## Limitations

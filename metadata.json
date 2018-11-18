@@ -2,7 +2,7 @@
   "name": "benformosa-linux_disable_ipv6",
   "version": "0.1.0",
   "author": "benformosa",
-  "summary": "Disables or enables IPv6 on Linux platforms",
+  "summary": "Disables or enables IPv6 on Linux systems",
   "license": "Apache-2.0",
   "source": "https://github.com/benformosa/puppet-linux_disable_ipv6",
   "project_page": "https://github.com/benformosa/puppet-linux_disable_ipv6",
@@ -29,6 +29,6 @@
     }
   ],
   "data_provider": null,
-  "description": "This module disables IPv6 for Linux systems"
+  "description": "This module disables or enables IPv6 on Linux systems"
 }
 

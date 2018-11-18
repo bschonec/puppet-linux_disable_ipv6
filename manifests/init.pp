@@ -87,7 +87,7 @@ class linux_disable_ipv6 (
           }
 
           # Update hosts file with localhost entry
-          if $disable_ipv6 {
+          if ($disable_ipv6 and ( lo in $interfaces or 'all' in $interfaces)) {
             $hosts_ensure = 'absent'
             $hosts_match_for_absence = true
           } else {

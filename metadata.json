@@ -1,6 +1,6 @@
 {
   "name": "benformosa-linux_disable_ipv6",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "benformosa",
   "summary": "Disables or enables IPv6 on Linux systems",
   "license": "Apache-2.0",
@@ -10,7 +10,7 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 1.0.0"
+      "version_requirement": ">= 2.4.0"
     }
   ],
   "operatingsystem_support": [

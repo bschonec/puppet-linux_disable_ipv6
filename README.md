@@ -53,7 +53,7 @@ It's also possible to enable IPv6, by setting the `disable_ipv6` to `false`:
 
 ```puppet
 class { 'linux_disable_ipv6':
-  disable_ipv6 => false.
+  disable_ipv6 => false,
 }
 ```
 

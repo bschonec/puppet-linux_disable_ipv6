@@ -1,5 +1,9 @@
 # Change log
 
+## 2022-05-02 Release 1.1.0
+
+* Convert to pdk
+
 ## 2022-05-02 Release 1.0.0
 
 * Add RedHat 8 support - markasammut

@@ -1,6 +1,6 @@
 {
   "name": "benformosa-linux_disable_ipv6",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "benformosa",
   "summary": "Disables or enables IPv6 on Linux systems",
   "license": "Apache-2.0",
@@ -28,7 +28,8 @@
       "version_requirement": ">= 5.0.0"
     }
   ],
-  "data_provider": null,
-  "description": "This module disables or enables IPv6 on Linux systems"
+  "description": "This module disables or enables IPv6 on Linux systems",
+  "pdk-version": "2.2.0",
+  "template-url": "pdk-default#2.2.0",
+  "template-ref": "tags/2.2.0-0-g2381db6"
 }
-

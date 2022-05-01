@@ -22,7 +22,7 @@ Depending on the operating system and version, the module may affect networking,
 
 Using this module may cause issues with software which requires IPv6, such as SSH Xforwarding.
 
-#### RedHat 7
+Configuration changes:
 
 * Creates kernel parameter configuration file `/etc/sysctl.d/ipv6.conf`
 * Load kernel parameters from file with `sysctl -p`
@@ -63,11 +63,9 @@ class { 'linux_disable_ipv6':
 
 | Parameter   | Type  | Default | Description |
 |-------------|-------|---------|-------------|
-| disable_ipv6 | Boolean | true    | Set this to either disable or enable IPv6 |
-| interfaces   | Array[String] | ['all'] | Disable IPv6 for these interfaces. If not supported, this parameter is ignored. If it contains the value 'all', other interface names will be ignored. |
+| `disable_ipv6` | `Boolean` | `true`    | Set this to either disable or enable IPv6 |
+| `interfaces`   | `Array[String]` | `['all']` | Disable IPv6 for these interfaces. If not supported, this parameter is ignored. If it contains the value `all`, other interface names will be ignored. |
 
 ## Limitations
 
-For an extensive list of supported operating systems, see [metadata.json](metadata.json).
-
-Currently, only Red Hat Enterprise Linux 6 and 7 are supported.
+For a list of supported operating systems, see [metadata.json](metadata.json).

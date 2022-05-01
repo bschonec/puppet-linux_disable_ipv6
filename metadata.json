@@ -1,6 +1,6 @@
 {
   "name": "benformosa-linux_disable_ipv6",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "benformosa",
   "summary": "Disables or enables IPv6 on Linux systems",
   "license": "Apache-2.0",

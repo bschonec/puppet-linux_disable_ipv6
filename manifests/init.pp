@@ -20,7 +20,7 @@ class linux_disable_ipv6 (
   case $facts['os']['family'] {
     'RedHat': {
       case $facts['os']['release']['major'] {
-        '7': {
+        '7', '8': {
           # Following the second method, using sysctl
 
           # Validation
@@ -104,7 +104,7 @@ class linux_disable_ipv6 (
 
         }
         default: {
-          fail("linux_disable_ipv6 supports RedHat like systems with major release of 7 and you have ${facts['os']['release']['full']}")
+          fail("linux_disable_ipv6 supports RedHat like systems with major release of 7/8 and you have ${facts['os']['release']['full']}")
         }
       }
     }

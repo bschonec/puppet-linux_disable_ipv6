@@ -35,6 +35,15 @@ class linux_disable_ipv6 (
             fail("Specified interfaces do not exist on host: ${bad_ifaces}")
           }
 
+          # Install the libtirpc package.
+          package {'libtirpc':
+            ensure => installed,
+            before => [
+                File_line['netconfig-udp6'],
+                File_line['netconfig-tcp6'],
+              ]
+          }
+
           # Only runs after notify
           exec { 'sysctl -p':
             command     => 'cat /etc/sysctl.d/*.conf | sysctl -p -',
